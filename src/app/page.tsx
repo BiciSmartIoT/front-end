@@ -9,8 +9,9 @@ export default function Home() {
   return (
     <main className="w-full bg-black"> 
     
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12">
+       
         <Hero />
+         <div className="max-w-[1440px] mx-auto px-6 md:px-12">
         <WhyUs/>
         <Features /> 
        </div>
