@@ -54,9 +54,7 @@ const handleOnboarding = async (
       }
     );
 
-    // STEP 2
-    // onboarding + kyc juntos
-
+ 
     await apiFetch(
       "/providing/onboarding",
       {
@@ -82,7 +80,7 @@ const handleOnboarding = async (
       }
     );
 
-    // SUCCESS
+ 
 
     setStep(2);
 
