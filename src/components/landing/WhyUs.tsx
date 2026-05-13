@@ -1,115 +1,96 @@
-import { Gauge, Wrench, ShieldCheck, ArrowRight } from "lucide-react";
-import { Button } from "../ui/Button";
- 
+import { Radio, BellRing, Activity } from "lucide-react";
+
 const features = [
   {
-    icon: <Gauge size={20} className="text-primary" />,
-    title: "Pro Performance",
-    desc: "Every bike in our fleet is a top-tier model, tuned for maximum aerodynamic efficiency.",
-    meta: "LEVEL: ELITE",
+    icon: <Radio size={28} className="text-primary" />,
+    title: "Rastreo 24/7",
+    desc: "Localización GPS en tiempo real con tecnología IoT/SIM y Bluetooth Low Energy para una vigilancia ininterrumpida.",
+    meta: "CONECTIVIDAD: GLOBAL",
     num: "01",
   },
   {
-    icon: <Wrench size={20} className="text-primary" />,
-    title: "Precision Care",
-    desc: "Daily inspections by certified mechanics ensure your ride is flawless from the first pedal.",
-    meta: "MAINTENANCE: ZERO-TOLERANCE",
+    icon: <BellRing size={28} className="text-primary" />,
+    title: "Alertas Inteligentes",
+    desc: "Notificaciones push instantáneas ante movimientos irregulares o intentos de manipulación del sistema de seguridad.",
+    meta: "RESPUESTA: INMEDIATA",
     num: "02",
   },
   {
-    icon: <ShieldCheck size={20} className="text-primary" />,
-    title: "Premium Gear",
-    desc: "Rental includes high-end helmets, lock systems, and optional navigation computers.",
-    meta: "GEAR: PROFESSIONAL",
+    icon: <Activity size={28} className="text-primary" />,
+    title: "Detección de Caídas",
+    desc: "Sensores analíticos (acelerómetro y giroscopio) que envían señales de auxilio SOS a tus contactos de emergencia.",
+    meta: "SEGURIDAD: PREVENTIVA",
     num: "03",
   },
 ];
- 
+
 export default function WhyUs() {
   return (
-    <section className="relative bg-black py-28 px-6 overflow-hidden">
+    <section className="relative  bg-black py-3 px-6 overflow-hidden">
       <div className="max-w-7xl mx-auto">
- 
-        {/* ── Section header ── */}
-        <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+        
+
+        <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
           <div>
-            {/* Accent bar */}
-            <div className="h-[2px] w-14 bg-primary mb-6" />
-            <h2 className="text-5xl font-black italic uppercase tracking-tighter leading-tight">
+            <div className="h-[3px] w-20 bg-primary mb-8" />
+            <h2 className="text-6xl font-black italic uppercase tracking-tighter leading-tight text-white">
               Por qué{" "}
-              <span
-                className="text-primary"
-                style={{ textShadow: "0 0 60px rgba(232,255,0,0.25)" }}
-              >
+             
                 Elegirnos
-              </span>
+  
             </h2>
           </div>
- 
-          <div className="flex flex-col items-end gap-5 md:max-w-xs">
-            <p className="text-gray-600 text-[10px] font-semibold leading-relaxed uppercase tracking-tight text-right">
-              Engineered for speed, built for reliability. Experience the elite
-              standard of urban and trail performance.
+
+          <div className="flex flex-col items-end gap-5 md:max-w-sm">
+            <p className="text-gray-400 text-xs font-semibold leading-relaxed uppercase tracking-widest text-right">
+              Diseñado para proteger, construido para conectar. La nueva era de seguridad inteligente para ciclistas urbanos y atletas.
             </p>
-            <Button variant="primary" size="sm" className="group">
-              All features{" "}
-              <ArrowRight
-                size={12}
-                className="ml-2 group-hover:translate-x-1 transition-transform"
-              />
-            </Button>
           </div>
         </div>
- 
-        {/* ── Cards grid ── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/5 border border-white/5">
+
+        <div className="grid grid-cols-1 md:grid-cols-3 border border-white/10">
           {features.map((f) => (
             <article
               key={f.num}
-              className="group relative bg-[#060606] p-10 flex flex-col transition-colors duration-300 hover:bg-[#0c0c0c]"
+              className="relative bg-[#080808] p-12 flex flex-col border-white/5 md:first:border-l-0 border-l"
             >
-              {/* Top-left primary accent on hover */}
-              <div className="absolute top-0 left-0 h-[2px] w-0 bg-primary transition-all duration-500 group-hover:w-full" />
- 
-              {/* Number + icon row */}
-              <div className="flex justify-between items-start mb-10">
-                <div className="w-10 h-10 border border-white/8 flex items-center justify-center transition-colors duration-300 group-hover:border-primary/30">
+              <div className="absolute top-0 left-0 h-[2px] w-full bg-primary/40" />
+
+              <div className="flex justify-between items-start mb-12">
+                <div className="w-14 h-14 border border-primary/20 flex items-center justify-center bg-primary/5">
                   {f.icon}
                 </div>
-                <span className="text-[11px] font-black text-white/8 transition-colors duration-300 group-hover:text-primary/25 tabular-nums">
+                <span className="text-2xl font-black text-white/5 tabular-nums">
                   {f.num}
                 </span>
               </div>
- 
-              {/* Title */}
-              <h3 className="text-xl font-black uppercase italic mb-4 transition-colors duration-200 group-hover:text-primary">
+
+              <h3 className="text-2xl font-black uppercase italic mb-6 text-white">
                 {f.title}
               </h3>
- 
-              {/* Description */}
-              <p className="text-gray-500 text-[11px] leading-loose mb-10 flex-1">
+
+              <p className="text-gray-400 text-[13px] leading-relaxed mb-12 flex-1">
                 {f.desc}
               </p>
- 
-              {/* Footer */}
-              <div className="border-t border-white/5 pt-4">
-                <span className="text-[8px] font-black text-primary tracking-[0.2em]">
+
+              <div className="border-t border-white/10 pt-6">
+                <span className="text-[10px] font-black text-primary tracking-[0.25em]">
                   {f.meta}
                 </span>
               </div>
             </article>
           ))}
         </div>
+
  
-        {/* ── Bottom strip ── */}
-        <div className="mt-px border border-t-0 border-white/5 bg-[#060606] px-10 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-[10px] uppercase font-bold text-gray-600 tracking-widest">
-            Trusted by professional riders across 18 cities
+        <div className="mt-px border border-t-0 border-white/10 bg-[#080808] px-12 py-8 flex flex-col lg:flex-row items-center justify-between gap-6">
+          <p className="text-xs uppercase font-bold text-gray-500 tracking-[0.2em]">
+            Infraestructura IoT de alta disponibilidad • <span className="text-white">98% SLA GLOBAL</span>
           </p>
-          <div className="flex items-center gap-6">
-            {["Cervélo", "Trek", "Specialized", "Cannondale"].map((brand) => (
-              <span key={brand} className="text-[9px] font-black uppercase text-white/15 tracking-widest">
-                {brand}
+          <div className="flex flex-wrap justify-center items-center gap-8">
+            {["GPS/GLONASS", "Bluetooth 5.0", "LTE-M / NB-IoT", "IMU 6-Axis"].map((tech) => (
+              <span key={tech} className="text-[10px] font-black uppercase text-white/20 tracking-[0.15em] border-b border-primary/30 pb-1">
+                {tech}
               </span>
             ))}
           </div>

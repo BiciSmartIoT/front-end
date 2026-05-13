@@ -1,5 +1,3 @@
-
-// src/app/(auth-flow)/layout.tsx
 export default function AuthFlowLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-black flex flex-col">

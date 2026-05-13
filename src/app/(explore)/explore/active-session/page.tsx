@@ -1,4 +1,3 @@
-// src/app/explore/active-session/page.tsx
 "use client";
 import { Battery, Timer, Zap, Map, Lock, AlertTriangle } from "lucide-react";
 import { Button } from "../../../../components/ui/Button";
@@ -7,7 +6,6 @@ import { useState, useEffect } from "react";
 export default function ActiveSessionPage() {
   const [timeLeft, setTimeLeft] = useState(3600); // 1 hora en segundos
 
-  // Timer mock
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
@@ -26,7 +24,7 @@ export default function ActiveSessionPage() {
     <div className="min-h-screen bg-black text-white p-6 pt-24">
       <div className="max-w-4xl mx-auto space-y-6">
         
-        {/* HEADER DE ESTADO */}
+     
         <div className="flex justify-between items-end border-b border-white/10 pb-6">
           <div>
             <h1 className="text-4xl font-black italic uppercase tracking-tighter">Session <span className="text-primary">Active</span></h1>
@@ -38,7 +36,7 @@ export default function ActiveSessionPage() {
           </div>
         </div>
 
-        {/* GRID DE TELEMETRÍA MOCK */}
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <TelemetryCard 
             label="Battery Level" 
@@ -62,7 +60,7 @@ export default function ActiveSessionPage() {
           />
         </div>
 
-        {/* MAPA MOCK / ZONA DE ACCIÓN */}
+     
         <div className="bg-[#0A0A0A] border border-white/10 h-64 relative flex items-center justify-center overflow-hidden">
             <div className="absolute inset-0 opacity-20 bg-[url('https://www.google.com/maps/d/u/0/thumbnail?mid=1_vN_Jv6XyU-8q3A')] bg-cover bg-center" />
             <div className="relative z-10 flex flex-col items-center">
@@ -71,7 +69,7 @@ export default function ActiveSessionPage() {
             </div>
         </div>
 
-        {/* CONTROLES DE SEGURIDAD */}
+        
         <div className="grid grid-cols-2 gap-4">
           <Button variant="outlined" className="py-8 flex flex-col gap-2 border-white/10 group hover:border-orange-500 transition-all">
             <Lock size={20} className="group-hover:text-orange-500" />

@@ -1,4 +1,3 @@
-// src/app/explore/[id]/rent/page.tsx
 "use client";
 import { useParams, useRouter } from "next/navigation";
 import {  CheckCircle2, Navigation } from "lucide-react";
@@ -49,7 +48,6 @@ export default function RentPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-           // En src/app/explore/[id]/rent/page.tsx
 <Button 
   onClick={() => router.push("/explore/active-session")} 
   className="py-6 text-[10px] font-black tracking-[0.2em]"

@@ -2,35 +2,66 @@ import { apiFetch } from "../lib/api";
 
 export interface Vehicle {
   id: string;
+
+  ownerId?: string;
+
   title: string;
+
   description: string;
+
   hourlyPrice: number;
-  status: 'AVAILABLE' | 'IN_SERVICE' | 'MAINTENANCE' | 'PENDING';
+
+  latitude: number;
+
+  longitude: number;
+
+  status:
+    | "AVAILABLE"
+    | "IN_SERVICE"
+    | "MAINTENANCE"
+    | "PENDING";
+
   ratingAvg?: number;
+
   image?: string;
+
+  createdAt?: string;
+
+  updatedAt?: string;
 }
 
 export const VehicleService = {
-  // Para el Rider: Explora todas las bicis disponibles
   getAllVehicles: async (): Promise<Vehicle[]> => {
     return await apiFetch("/vehicles");
   },
 
-  // Para el Provider: Ve solo sus propias máquinas
   getOwnFleet: async (): Promise<Vehicle[]> => {
     return await apiFetch("/vehicles/own");
   },
 
-  // Crear nueva máquina
-  createVehicle: async (data: Partial<Vehicle>) => {
+  createVehicle: async (data: {
+    title: string;
+    description: string;
+    hourlyPrice: number;
+    latitude: number;
+    longitude: number;
+  }) => {
     return await apiFetch("/vehicles", {
       method: "POST",
-      body: JSON.stringify(data),
+
+      body: JSON.stringify({
+        title: data.title,
+        description: data.description,
+        hourlyPrice: data.hourlyPrice,
+        latitude: data.latitude,
+        longitude: data.longitude,
+      }),
     });
   },
 
-  // Obtener detalle por ID
-  getVehicleById: async (id: string): Promise<Vehicle> => {
+  getVehicleById: async (
+    id: string
+  ): Promise<Vehicle> => {
     return await apiFetch(`/vehicles/${id}`);
-  }
+  },
 };

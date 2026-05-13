@@ -43,7 +43,6 @@ export default function SelectRolePage() {
           </Button>
         </div>
 
-        {/* Lado del Proveedor (Provider) */}
         <div className="group border border-white/5 bg-[#0A0A0A] p-10 hover:border-primary transition-all cursor-pointer">
           <Navigation className="text-primary mb-6" size={40} />
           <h2 className="text-2xl font-black italic uppercase mb-2">Provider</h2>

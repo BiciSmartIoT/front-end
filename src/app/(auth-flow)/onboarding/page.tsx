@@ -34,46 +34,69 @@ export default function OnboardingPage() {
     };
     if (token) checkStatus();
   }, [token, router]);
-const handleOnboarding = async (e: React.FormEvent) => {
+const handleOnboarding = async (
+  e: React.FormEvent
+) => {
+
   e.preventDefault();
+
   setLoading(true);
 
   try {
-    // 1. Elevamos el rol
-    await apiFetch("/iam/providers/onboard", { method: "POST" });
-    
-    // OPCIONAL: Aquí deberías llamar a un endpoint de login o /refresh 
-    // para obtener un nuevo token que YA TENGA el ROLE_PROVIDER.
-    // Si no tienes /refresh, a veces el backend actualiza la DB pero 
-    // tu JWT actual sigue siendo inválido para esa ruta.
 
-    // 2. Iniciamos onboarding
-    await apiFetch("/providing/onboarding", {
-      method: "POST",
-      body: JSON.stringify({
-        displayName: formData.displayName,
-        phone: formData.phone
-      })
-    });
+    // STEP 1
+    // convertir usuario a provider
 
-    // 3. KYC
-    await apiFetch("/providing/kyc", {
-      method: "POST",
-      body: JSON.stringify({
-        docType: formData.docType,
-        docNumber: formData.docNumber
-      })
-    });
+    await apiFetch(
+      "/iam/providers/onboard",
+      {
+        method: "POST",
+      }
+    );
 
-    setStep(2); 
+    // STEP 2
+    // onboarding + kyc juntos
+
+    await apiFetch(
+      "/providing/onboarding",
+      {
+        method: "POST",
+
+        body: JSON.stringify({
+
+          displayName:
+            formData.displayName,
+
+          phone:
+            formData.phone.replace(
+              /\s/g,
+              ""
+            ),
+
+          docType:
+            formData.docType,
+
+          docNumber:
+            formData.docNumber,
+        }),
+      }
+    );
+
+    // SUCCESS
+
+    setStep(2);
+
   } catch (error: any) {
-    // Si el error es 403, es probable que el token esté desactualizado
-    if (error.message.includes("403") || error.message.includes("Forbidden")) {
-       alert("Permisos actualizándose. Por favor, intenta enviar el formulario una vez más.");
-    } else {
-       alert(error.message || "Error en el proceso");
-    }
+
+    console.error(error);
+
+    alert(
+      error.message ||
+        "Onboarding failed"
+    );
+
   } finally {
+
     setLoading(false);
   }
 };

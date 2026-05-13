@@ -18,22 +18,19 @@ export default function Navbar() {
   return (
     <nav className="border-b border-white/10 bg-black/80 backdrop-blur-xl fixed top-0 w-full z-[100]">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        
-        {/* LOGO */}
+      
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center gap-2 group">
             <div className="bg-primary p-1">
               <Zap className="text-black fill-black" size={18} />
             </div>
             <span className="font-black italic uppercase tracking-tighter text-xl text-white">
-              BiciSmart<span className="text-primary"> Iot</span>
+              BiciSmart<span className="text-primary">Iot</span>
             </span>
           </Link>
 
-          {/* NAV CENTRAL DINÁMICO SEGÚN ROL */}
           <div className="hidden md:flex gap-6 border-l border-white/10 pl-8 h-6 items-center text-[9px] font-black uppercase tracking-[0.3em]">
             
-            {/* Explore: Visible para todos */}
             <Link 
               href="/explore" 
               className={`${isActive('/explore') ? 'text-primary' : 'text-gray-500 hover:text-white'} transition-colors flex items-center gap-2`}
@@ -51,7 +48,6 @@ export default function Navbar() {
               </Link>
             )}
 
-            {/* VISTA SOLO PARA EL PROVEEDOR (EL QUE ARRIENDA) */}
             {user && isProvider && (
               <>
                 <Link 
@@ -71,7 +67,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* ACCIONES DE USUARIO */}
+
         <div className="flex items-center gap-4">
           {user ? (
             <div className="flex items-center gap-3">

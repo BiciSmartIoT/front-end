@@ -1,11 +1,5 @@
 import { cva } from "class-variance-authority";
-import {
-  Search, MapPin, Calendar, Bike, Mountain, Zap,
-  Gauge, ShieldCheck, Wrench, Star, ArrowRight,
-  ChevronRight, Timer, Trophy, Users
-} from "lucide-react";
- 
-// ─── CVA Variants ────────────────────────────────────────────────────────────
+
  
 const badge = cva(
   "inline-flex items-center font-black uppercase tracking-[0.3em]",

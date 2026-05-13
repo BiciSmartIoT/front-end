@@ -1,4 +1,3 @@
-// app/dashboard/layout.tsx
 "use client"; 
 import { LayoutDashboard, Bike, Settings, LogOut, HistoryIcon, LucideCreditCard } from "lucide-react";
 import Link from "next/link";
