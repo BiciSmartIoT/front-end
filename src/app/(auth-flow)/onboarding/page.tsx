@@ -44,8 +44,6 @@ const handleOnboarding = async (
 
   try {
 
-    // STEP 1
-    // convertir usuario a provider
 
     await apiFetch(
       "/iam/providers/onboard",

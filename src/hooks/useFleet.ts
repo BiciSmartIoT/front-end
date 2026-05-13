@@ -18,7 +18,6 @@ export function useFleet(mode: "own" | "all" = "all") {
 
       } catch (error) {
 
-
         setVehicles(MOCK_DATA);
 
       } finally {

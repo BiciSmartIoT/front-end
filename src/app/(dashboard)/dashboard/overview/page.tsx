@@ -6,7 +6,7 @@ import { Plus, Zap, Activity, DollarSign, MapPin, Battery, Navigation } from "lu
 
 export default function OverviewPage() {
   const [stats] = useState([
-    { label: "Total Revenue", value: "$1,240.50", icon: <DollarSign className="text-primary" size={20}/> },
+    { label: "Total Revenue", value: "$12.50", icon: <DollarSign className="text-primary" size={20}/> },
     { label: "Units Online", value: "3 Active", icon: <Zap className="text-primary" size={20}/> },
     { label: "System Health", value: "98%", icon: <Activity className="text-primary" size={20}/> },
   ]);
