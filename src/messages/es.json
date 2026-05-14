@@ -1,0 +1,200 @@
+{
+  "hero": {
+    "badge": "Unidades de Alto Rendimiento",
+    "title_1": "Domina el",
+    "title_2": "Asfalto",
+    "location_label": "Lugar de recogida",
+    "location_placeholder": "¿A DÓNDE VAS?",
+    "start_date": "Fecha inicio",
+    "end_date": "Fecha fin",
+    "cta": "Ver disponibilidad",
+    "cat_road": "Road Racing",
+    "cat_mtb": "MTB Pro",
+    "cat_electric": "Electric Flow"
+  },
+  "footer": {
+    "copy": "© 2026 VELOCITY PERFORMANCE RENTALS. ENGINEERED FOR SPEED.",
+    "privacy": "Política de privacidad",
+    "terms": "Términos de servicio",
+    "fleet": "Flota",
+    "contact": "Contacto",
+    "lang": "Idioma"
+  },
+
+  "historyFeatures": {
+    "badge": "Génesis del Proyecto",
+    "title_1": "BiciSmart",
+    "title_2": "IoT",
+
+    "description": "Nacimos de una realidad cruda: el incremento de robos sigilosos y la falta de auxilio en accidentes aislados. Entendimos que los candados tradicionales son sistemas pasivos y vulnerables que no ofrecen tranquilidad real.",
+
+    "problem_title": "La Problemática",
+
+    "problem_text": "Identificamos que los usuarios urbanos y equipos de emergencia carecen de alertas inmediatas. El robo ocurre en segundos, pero la respuesta suele tardar horas. BiciSmart IoT rompe este ciclo transformando la bicicleta en un nodo inteligente capaz de defenderse y pedir ayuda por sí mismo.",
+
+    "uptime": "Uptime de Red",
+
+    "monitoring": "Monitoreo Activo",
+
+    "feature_1_title": "Rastreo Omnipresente",
+
+    "feature_1_subtitle": "Tecnología GPS + SIM",
+
+    "feature_1_text": "Implementamos un sistema de localización en tiempo real con geofencing dinámico. Si tu bicicleta sale del radio permitido, el microcontrolador activa una alerta crítica directamente en tu smartphone.",
+
+    "feature_2_title": "Protección de Vida",
+
+    "feature_2_subtitle": "Módulo SOS Analítico",
+
+    "feature_2_text": "Utilizando acelerómetros de precisión, detectamos caídas o colisiones repentinas. Ante un incidente, el sistema envía tu ubicación exacta a contactos de emergencia sin intervención manual.",
+
+    "feature_3_title": "Ecosistema Discreto",
+
+    "feature_3_subtitle": "Diseño Integrado",
+
+    "feature_3_text": "El hardware de BiciSmart IoT es pequeño y energéticamente eficiente (NB-IoT), diseñado para ser imperceptible a la vista del ladrón y resistente a las condiciones climáticas más duras."
+  },
+  
+  "infoPage": {
+    "badge": "Precision Meets Safety",
+
+    "stat_1": "SLA de Conexión",
+
+    "stat_2": "Costo Instalación",
+
+    "stat_3": "Falsas Alertas",
+
+    "mission_1": "Nuestra",
+
+    "mission_2": "Misión",
+
+    "mission_text": "Observamos que los usuarios urbanos enfrentan altos niveles de inseguridad. Los sistemas de resguardo tradicionales son pasivos. BiciSmart IoT nace para ofrecer un sistema inteligente, accesible y discreto que permite rastrear bicicletas 24/7 y alertar en situaciones de riesgo.",
+
+    "card_1_title": "Antirrobo Activo",
+
+    "card_1_text": "Notificaciones push instantáneas cada vez que el microcontrolador detecta un movimiento irregular.",
+
+    "card_2_title": "Diseño Integrado",
+
+    "card_2_text": "Hardware reducido con batería prolongada que se adhiere naturalmente a la geometría de la bicicleta."
+  }
+,
+  "whyus": {
+    "title_1": "Por qué",
+    "title_2": "Elegirnos",
+    "subtitle": "Diseñado para proteger, construido para conectar. La nueva era de seguridad inteligente para ciclistas urbanos y atletas.",
+    "infra": "Infraestructura IoT de alta disponibilidad",
+
+    "features": [
+      {
+        "title": "Rastreo 24/7",
+        "desc": "Localización GPS en tiempo real con tecnología IoT/SIM y Bluetooth Low Energy para una vigilancia ininterrumpida.",
+        "meta": "CONECTIVIDAD: GLOBAL"
+      },
+      {
+        "title": "Alertas Inteligentes",
+        "desc": "Notificaciones push instantáneas ante movimientos irregulares o intentos de manipulación del sistema de seguridad.",
+        "meta": "RESPUESTA: INMEDIATA"
+      },
+      {
+        "title": "Detección de Caídas",
+        "desc": "Sensores analíticos (acelerómetro y giroscopio) que envían señales de auxilio SOS a tus contactos de emergencia.",
+        "meta": "SEGURIDAD: PREVENTIVA"
+      }
+    ]
+  },
+ 
+  "pricing": {
+    "title": "Nuestros Planes",
+    "popular": "Más Popular",
+    "month": "mes",
+    "install": "Cada suscripción requiere instalación previa de S/ 60",
+
+    "plans": [
+      {
+        "button": "Elegir Plan",
+        "features": [
+          "Rastreo GPS 24/7",
+          "Geocercas de seguridad",
+          "Alertas de movimiento",
+          "Detección SOS"
+        ]
+      },
+
+      {
+        "button": "Unirse a Elite",
+        "features": [
+          "Todo en Smart Shield",
+          "Detección SOS Activa",
+          "Alertas a contactos",
+          "Prioridad de red NB-IoT"
+        ]
+      },
+
+      {
+        "button": "Plan Flotilla",
+        "features": [
+          "Multi-dispositivos",
+          "Dashboard de gestión",
+          "Reportes de incidentes",
+          "Soporte técnico VIP"
+        ]
+      }
+    ]
+  },
+  
+  "faq": {
+    "title_1": "Preguntas",
+    "title_2": "Frecuentes",
+
+    "items": [
+      {
+        "q": "¿Por qué hay un costo de instalación?",
+        "a": "El hardware BiciSmart es un microcontrolador de grado industrial. Los S/ 60 cubren el dispositivo, la configuración de sensores y la instalación física discreta."
+      },
+      {
+        "q": "¿Qué tecnología de red utilizan?",
+        "a": "Utilizamos LTE-M / NB-IoT combinado con Bluetooth Low Energy para mantener conectividad incluso en zonas de baja cobertura."
+      },
+      {
+        "q": "¿Cómo funciona la señal SOS?",
+        "a": "El acelerómetro y giroscopio detectan impactos o caídas y envían automáticamente la ubicación GPS a tus contactos de emergencia."
+      },
+      {
+        "q": "¿Es compatible con cualquier bicicleta?",
+        "a": "Sí. El diseño universal permite instalar el sistema en cualquier tipo de bicicleta de forma discreta y segura."
+      }
+    ]
+  },
+
+  "contact": {
+    "hero_1": "Únete a la",
+    "hero_2": "red",
+    "hero_desc": "Accede al sistema de protección ciclista más avanzado del mercado. Ingeniería IoT diseñada para quienes no comprometen su seguridad.",
+    "stat_1": "Rastreo Activo",
+    "stat_2": "Instalación Única",
+
+    "form_title": "Comienza Ahora",
+    "form_subtitle": "Configura tu perfil de seguridad",
+
+    "name": "Nombre Completo",
+    "email": "Correo Electrónico",
+    "phone": "Teléfono",
+    "password": "Contraseña",
+
+    "terms_1": "Acepto los",
+    "terms_2": "Términos de Servicio",
+    "terms_3": "y la",
+    "terms_4": "Política de Privacidad",
+    "terms_5": "sobre el monitoreo y protección de mi unidad.",
+
+    "cta": "Crear Cuenta",
+
+    "login_1": "¿Ya eres parte de la red?",
+    "login_2": "Inicia Sesión"
+  }
+
+
+
+
+}

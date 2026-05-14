@@ -1,3 +1,8 @@
+"use client";
+
+import {
+  LangProvider
+} from "../context/LangContext";
 
 import Hero from "../components/landing/Hero";
 import Features from "../components/landing/Feature";
@@ -11,7 +16,7 @@ import FaqPage from "../components/landing/FqaPage";
 export default function Home() {
   return (
     <main className="w-full bg-black"> 
-  
+   <LangProvider>
         <Hero />
          <div className="max-w-[1440px] mx-auto px-6 md:px-12">
         <Features />
@@ -23,7 +28,7 @@ export default function Home() {
          <FaqPage/>
       <Contact/>
       <Footer />
-     
+     </LangProvider>
     </main>
   );
 }
