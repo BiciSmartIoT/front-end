@@ -27,18 +27,18 @@ export default function InfoPage() {
       <div className="max-w-5xl mx-auto py-32 px-6 grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
         <div>
           <h2 className="text-5xl font-black italic uppercase text-white mb-8 leading-none">Nuestra <span className="text-primary">Misión</span></h2>
-          <p className="text-gray-400 text-sm leading-loose italic">
+          <p className="text-gray-400 text-[15px] leading-loose italic">
             Observamos que los usuarios urbanos enfrentan altos niveles de inseguridad. Los sistemas de resguardo tradicionales son pasivos. BiciSmart IoT nace para ofrecer un sistema inteligente, accesible y discreto que permite rastrear bicicletas 24/7 y alertar en situaciones de riesgo.
           </p>
         </div>
         <div className="space-y-6">
           <div className="bg-[#080808] p-8 border-l-2 border-primary">
-            <h4 className="text-white font-black text-xs uppercase italic mb-2 tracking-widest">Antirrobo Activo</h4>
-            <p className="text-gray-500 text-[11px] leading-relaxed italic">Notificaciones push instantáneas cada vez que el microcontrolador detecta un movimiento irregular.</p>
+            <h4 className="text-white font-black text-lg uppercase italic mb-2 tracking-widest">Antirrobo Activo</h4>
+            <p className="text-gray-500 text-[15px] leading-relaxed italic">Notificaciones push instantáneas cada vez que el microcontrolador detecta un movimiento irregular.</p>
           </div>
           <div className="bg-[#080808] p-8 border-l-2 border-primary">
-            <h4 className="text-white font-black text-xs uppercase italic mb-2 tracking-widest">Diseño Integrado</h4>
-            <p className="text-gray-500 text-[11px] leading-relaxed italic">Hardware reducido con batería prolongada que se adhiere naturalmente a la geometría de la bicicleta.</p>
+            <h4 className="text-white font-black text-lg uppercase italic mb-2 tracking-widest">Diseño Integrado</h4>
+            <p className="text-gray-500 text-[15px] leading-relaxed italic">Hardware reducido con batería prolongada que se adhiere naturalmente a la geometría de la bicicleta.</p>
           </div>
         </div>
       </div>

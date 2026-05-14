@@ -17,24 +17,24 @@ export default function HistoryFeatures() {
               BiciSmart <br /> 
               <span className="text-primary">IoT</span>
             </h2>
-            <p className="text-gray-400 text-lg leading-relaxed max-w-xl font-light">
+            <p className="text-gray-400 text-[16px] leading-relaxed max-w-xl font-light">
               Nacimos de una realidad cruda: el incremento de robos sigilosos y la falta de auxilio en accidentes aislados. Entendimos que los candados tradicionales son sistemas pasivos y vulnerables que no ofrecen tranquilidad real.
             </p>
           </div>
           
           <div className="lg:w-1/2 space-y-8 bg-[#080808] p-12 border-l-2 border-primary/50">
-            <p className="text-gray-300 text-sm leading-loose">
-              <strong className="text-white block mb-2 uppercase tracking-widest text-xs">La Problemática</strong>
+            <p className="text-gray-400 text-[15px] leading-loose">
+              <strong className="text-gray-200 block mb-2 uppercase tracking-widest text-lg">La Problemática</strong>
               Identificamos que los usuarios urbanos y equipos de emergencia carecen de alertas inmediatas. El robo ocurre en segundos, pero la respuesta suele tardar horas. BiciSmart IoT rompe este ciclo transformando la bicicleta en un nodo inteligente capaz de defenderse y pedir ayuda por sí mismo.
             </p>
             <div className="flex gap-10">
               <div>
                 <span className="text-primary font-black text-3xl italic">98%</span>
-                <p className="text-[10px] text-gray-500 uppercase tracking-tighter mt-1">Uptime de Red</p>
+                <p className="text-[10px] text-gray-200 uppercase tracking-tighter mt-1">Uptime de Red</p>
               </div>
               <div>
                 <span className="text-primary font-black text-3xl italic">24/7</span>
-                <p className="text-[10px] text-gray-500 uppercase tracking-tighter mt-1">Monitoreo Activo</p>
+                <p className="text-[10px] text-gray-200 uppercase tracking-tighter mt-1">Monitoreo Activo</p>
               </div>
             </div>
           </div>
@@ -52,7 +52,7 @@ export default function HistoryFeatures() {
               <span className="text-[10px] font-black text-primary tracking-[0.3em] uppercase">Tecnología GPS + SIM</span>
             </div>
             <div className="md:col-span-6">
-              <p className="text-gray-500 text-sm leading-relaxed border-l border-white/10 pl-8">
+              <p className="text-gray-400 text-[15px] leading-relaxed border-l border-white/10 pl-8">
                 Implementamos un sistema de localización en tiempo real con geofencing dinámico. Si tu bicicleta sale del radio permitido, el microcontrolador activa una alerta crítica directamente en tu smartphone.
               </p>
             </div>
@@ -69,7 +69,7 @@ export default function HistoryFeatures() {
               <span className="text-[10px] font-black text-primary tracking-[0.3em] uppercase">Módulo SOS Analítico</span>
             </div>
             <div className="md:col-span-6">
-              <p className="text-gray-500 text-sm leading-relaxed border-l border-white/10 pl-8">
+              <p className="text-gray-400 text-[15px] leading-relaxed border-l border-white/10 pl-8">
                 Utilizando acelerómetros de precisión, detectamos caídas o colisiones repentinas. Ante un incidente, el sistema envía tu ubicación exacta a contactos de emergencia sin intervención manual.
               </p>
             </div>
@@ -86,7 +86,7 @@ export default function HistoryFeatures() {
               <span className="text-[10px] font-black text-primary tracking-[0.3em] uppercase">Diseño Integrado</span>
             </div>
             <div className="md:col-span-6">
-              <p className="text-gray-500 text-sm leading-relaxed border-l border-white/10 pl-8">
+              <p className="text-gray-400 text-[15px]  leading-relaxed border-l border-white/10 pl-8">
                 El hardware de BiciSmart IoT es pequeño y energéticamente eficiente (NB-IoT), diseñado para ser imperceptible a la vista del ladrón y resistente a las condiciones climáticas más duras.
               </p>
             </div>

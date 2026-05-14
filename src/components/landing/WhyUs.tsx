@@ -69,7 +69,7 @@ export default function WhyUs() {
                 {f.title}
               </h3>
 
-              <p className="text-gray-400 text-[13px] leading-relaxed mb-12 flex-1">
+              <p className="text-gray-400 text-[15px] leading-relaxed mb-12 flex-1">
                 {f.desc}
               </p>
 
