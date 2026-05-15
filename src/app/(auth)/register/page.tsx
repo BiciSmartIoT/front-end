@@ -5,6 +5,7 @@ import { Button } from "../../../components/ui/Button";
 import Link from "next/link";
 import { User, Mail, Lock, Zap } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { API_BASE_URL } from "../../../lib/api";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -21,7 +22,7 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8080/api/iam/auth/register", {
+      const response = await fetch(`${API_BASE_URL}/iam/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { AuthResponse, User } from "../types/api";
+import { API_BASE_URL } from "../lib/api";
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -38,7 +39,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 // ... dentro de tu AuthProvider
 const login = async (email: string, password: string) => {
   try {
-    const res = await fetch("http://localhost:8080/api/iam/auth/login", {
+    const res = await fetch(`${API_BASE_URL}/iam/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),

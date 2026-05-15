@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Plus, Power, Cpu, Camera, X, MapPin } from "lucide-react";
 import { Button } from "../../../../components/ui/Button";
 import { VehicleService, Vehicle } from "../../../../services/vehicle-service";
+import { API_BASE_URL } from "../../../../lib/api";
 
 const mockBikeImages = [
   "https://images.unsplash.com/photo-1541625602330-2277a4c46182?q=80&w=1200&auto=format&fit=crop",
@@ -308,7 +309,7 @@ function ActivationModal({ bike, onClose }: { bike: Vehicle; onClose: () => void
       const formData = new FormData();
       formData.append("vehicleId", String(bike.id));
       images.forEach((img) => formData.append("images", img));
-      await fetch("http://localhost:8080/api/vehicles/activate", { method: "POST", body: formData });
+      await fetch(`${API_BASE_URL}/vehicles/activate`, { method: "POST", body: formData });
       alert("Vehicle activated");
       onClose();
     } catch (err) {
