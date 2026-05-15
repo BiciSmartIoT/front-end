@@ -1,5 +1,12 @@
 import { Button } from "../../../components/ui/Button";
 import { Cpu, Weight, Disc, Calendar, ChevronDown } from "lucide-react";
+import { MOCK_DATA } from "../../../data/vehicles";
+
+export function generateStaticParams() {
+  return MOCK_DATA.map((vehicle) => ({
+    id: vehicle.id,
+  }));
+}
 
 export default function RentalDetailPage() {
   return (
