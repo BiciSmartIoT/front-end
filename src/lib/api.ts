@@ -1,4 +1,3 @@
-// src/lib/api.ts
 export const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || "https://back-end-production-7214.up.railway.app/api";
 
