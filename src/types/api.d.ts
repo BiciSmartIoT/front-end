@@ -1,4 +1,4 @@
-// src/types/api.ts
+
 
 export interface User {
   id: number;
@@ -11,5 +11,5 @@ export interface User {
 export interface AuthResponse {
   token: string;
   tokenType: string;
-  user: User; // Aquí vinculamos la interfaz User
+  user: User; 
 }
