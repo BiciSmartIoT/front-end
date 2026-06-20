@@ -9,7 +9,7 @@ export default function ProfilePage() {
 
   const [user, setUser] = useState({
     name: "BRUNO BIKES SAC",
-    email: "bruno@bikelab.com",
+    email: "bruno@bicesmartiot.com",
     phone: "+51 900 800 700",
     role: "PROVIDER",
     status: "APPROVED",

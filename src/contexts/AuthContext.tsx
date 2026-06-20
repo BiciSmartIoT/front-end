@@ -1,16 +1,25 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 import { useRouter } from "next/navigation";
 import { AuthResponse, User } from "../types/api";
-import { API_BASE_URL } from "../lib/api";
+import { API_BASE_URL, TOKEN_STORAGE_KEY, USER_STORAGE_KEY } from "../lib/api";
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  isLoading: boolean; // Solución al error ts(2339) [cite: 291, 292]
+  isLoading: boolean;
   user: User | null;
   token: string | null;
-  login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  login: (
+    email: string,
+    password: string
+  ) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
 }
 
@@ -19,68 +28,72 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true); // Estado inicial de carga [cite: 294]
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    // Sincronización: Recuperar sesión al montar el componente [cite: 292]
-    const savedToken = localStorage.getItem("bikelab_token");
-    const savedUser = localStorage.getItem("bikelab_user");
-    
+    const savedToken = localStorage.getItem(TOKEN_STORAGE_KEY);
+    const savedUser = localStorage.getItem(USER_STORAGE_KEY);
+
     if (savedToken && savedUser) {
       setToken(savedToken);
       setUser(JSON.parse(savedUser));
     }
-    
-    // Una vez terminada la lectura de localStorage, dejamos de cargar 
-    setIsLoading(false); 
+
+    setIsLoading(false);
   }, []);
 
-// ... dentro de tu AuthProvider
-const login = async (email: string, password: string) => {
-  try {
-    const res = await fetch(`${API_BASE_URL}/iam/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+  const login = async (email: string, password: string) => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/iam/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-    if (!res.ok) throw new Error("Credenciales inválidas");
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(
+          errorData.message ||
+            errorData.detail ||
+            errorData.title ||
+            "Credenciales invalidas"
+        );
+      }
 
-    const data: AuthResponse = await res.json();
-    
-    // IMPORTANTE: Actualizar el estado de React ANTES de que el componente useAuth lea isAuthenticated
-    setToken(data.token);
-    setUser(data.user);
-    
-    // Guardar en Storage
-    localStorage.setItem("bikelab_token", data.token);
-    localStorage.setItem("bikelab_user", JSON.stringify(data.user));
+      const data: AuthResponse = await res.json();
 
-    // Ahora isAuthenticated pasará a ser TRUE inmediatamente
-    return { success: true };
-  } catch (error) {
-    return { success: false, error: (error as Error).message };
-  }
-};
+      setToken(data.token);
+      setUser(data.user);
+
+      localStorage.setItem(TOKEN_STORAGE_KEY, data.token);
+      localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(data.user));
+
+      return { success: true };
+    } catch (error) {
+      return { success: false, error: (error as Error).message };
+    }
+  };
 
   const logout = () => {
     setToken(null);
     setUser(null);
-    localStorage.removeItem("bikelab_token");
-    localStorage.removeItem("bikelab_user");
+    localStorage.removeItem(TOKEN_STORAGE_KEY);
+    localStorage.removeItem(USER_STORAGE_KEY);
     router.push("/login");
   };
 
   return (
-    <AuthContext.Provider value={{ 
-      user, 
-      token, 
-      isAuthenticated: !!token, 
-      isLoading, // Exponemos isLoading al resto de la app [cite: 294]
-      login, 
-      logout 
-    }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        token,
+        isAuthenticated: !!token,
+        isLoading,
+        login,
+        logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

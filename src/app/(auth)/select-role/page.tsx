@@ -11,7 +11,7 @@ export default function SelectRolePage() {
   // COMENTADO TEMPORALMENTE PARA PROBAR:
   /*
   useEffect(() => {
-    const token = localStorage.getItem('bikelab_token'); 
+    const token = localStorage.getItem('bicesmartiot_token'); 
     if (!token && !isLoading) {
       router.replace('/login');
     }
@@ -25,7 +25,7 @@ export default function SelectRolePage() {
         Choose your Path
       </h1>
       <p className="text-gray-500 uppercase text-[10px] font-black tracking-[0.3em] mb-12">
-        How do you want to use BiciSmartIot today?
+        How do you want to use BiceSmartIoT today?
       </p>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl w-full">

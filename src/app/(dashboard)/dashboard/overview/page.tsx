@@ -1,69 +1,97 @@
 "use client";
 
-import { useState } from "react";
-import { DollarSign, Zap, Activity, Navigation, Battery } from "lucide-react";
+import { Activity, AlertTriangle, Lock, RefreshCw, Router, ShieldCheck } from "lucide-react";
+
+import { useIotTelemetry } from "../../../../hooks/useIotTelemetry";
+import { IotDeviceEvent, IotEventType } from "../../../../services/iot-service";
+
+const EVENT_LABELS: Record<IotEventType, string> = {
+  SPEED_ALERT: "Alerta de velocidad",
+  NEAR_LIMIT: "Cerca del limite",
+  LOCKED: "Bloqueo activado",
+  RESET: "Sistema reiniciado",
+  HEARTBEAT: "Conexion activa",
+};
+
+const EVENT_STYLES: Record<IotEventType, string> = {
+  SPEED_ALERT: "text-yellow-300 border-yellow-300/30 bg-yellow-300/10",
+  NEAR_LIMIT: "text-orange-300 border-orange-300/30 bg-orange-300/10",
+  LOCKED: "text-red-300 border-red-300/30 bg-red-300/10",
+  RESET: "text-blue-300 border-blue-300/30 bg-blue-300/10",
+  HEARTBEAT: "text-primary border-primary/30 bg-primary/10",
+};
 
 export default function OverviewPage() {
-  const [stats] = useState([
-    { label: "Total Revenue", value: "$12.50", icon: DollarSign, delta: "+8% today" },
-    { label: "Units Online", value: "3", suffix: "Active", icon: Zap, delta: "2 idle" },
-    { label: "System Health", value: "98%", icon: Activity, delta: "Nominal" },
-  ]);
+  const { latestEvent, events, loading, error, isOnline, pollIntervalMs } = useIotTelemetry();
 
-  const units = [
-    { id: "001", name: "TRIKA A1", speed: 24, battery: 82 },
-    { id: "002", name: "MONARK R2", speed: 18, battery: 47 },
+  const stats = [
+    {
+      label: "Conexion ESP32",
+      value: isOnline ? "Online" : "Offline",
+      icon: Router,
+      detail: latestEvent ? `Actualiza cada ${pollIntervalMs / 1000}s` : "Sin eventos recibidos",
+    },
+    {
+      label: "Estado de bloqueo",
+      value: latestEvent?.blocked ? "Bloqueada" : "Libre",
+      icon: Lock,
+      detail: latestEvent?.blocked ? "Servo en modo bloqueo" : "Servo sin bloqueo activo",
+    },
+    {
+      label: "Ultimo evento",
+      value: latestEvent ? EVENT_LABELS[latestEvent.eventType] : "Pendiente",
+      icon: Activity,
+      detail: latestEvent ? formatDate(latestEvent.receivedAt) : "Esperando circuito",
+    },
   ];
 
   return (
     <div className="p-10 max-w-7xl mx-auto text-white">
-      <div className="flex justify-between items-end mb-7">
+      <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between mb-7">
         <div>
           <h1 className="text-4xl font-black italic uppercase leading-none">
-            System <span className="text-primary">Overview</span>
+            BiceSmart<span className="text-primary">IoT</span>
           </h1>
           <p className="text-gray-500 text-[11px] uppercase mt-2 tracking-wider">
-            Real-time node telemetry · Lima Central
+            Telemetria real del circuito ESP32
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-          <span className="text-[10px] text-green-500 font-black uppercase tracking-widest">
-            Live
+          <div className={`w-1.5 h-1.5 rounded-full ${isOnline ? "bg-green-500 animate-pulse" : "bg-red-500"}`} />
+          <span className={`text-[10px] font-black uppercase tracking-widest ${isOnline ? "text-green-500" : "text-red-400"}`}>
+            {isOnline ? "Live" : "Sin senal"}
           </span>
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-px bg-white/10 mb-8">
-        {stats.map((stat, i) => {
+      {error && (
+        <div className="mb-6 border border-red-400/30 bg-red-400/10 px-4 py-3 text-sm text-red-200">
+          {error}
+        </div>
+      )}
+
+      <div className="grid gap-px bg-white/10 mb-8 md:grid-cols-3">
+        {stats.map((stat) => {
           const Icon = stat.icon;
           return (
-            <div key={i} className="bg-[#0a0a0a] px-5 py-5">
+            <div key={stat.label} className="bg-[#0a0a0a] px-5 py-5">
               <div className="flex items-center justify-between mb-3">
                 <p className="text-[9px] font-black text-gray-500 uppercase tracking-widest">
                   {stat.label}
                 </p>
-                <Icon size={13} className="text-primary opacity-60" />
+                <Icon size={13} className="text-primary opacity-70" />
               </div>
-              <p className="text-3xl font-black italic tracking-tight">
-                {stat.value}
-                {stat.suffix && (
-                  <span className="text-base ml-2 not-italic font-black text-gray-500">
-                    {stat.suffix}
-                  </span>
-                )}
-              </p>
+              <p className="text-2xl font-black italic tracking-tight">{stat.value}</p>
               <p className="text-[10px] text-gray-600 uppercase tracking-wider mt-2">
-                {stat.delta}
+                {stat.detail}
               </p>
             </div>
           );
         })}
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
-
-        <div className="col-span-2 border border-white/10 bg-[#0a0a0a] h-[420px] relative overflow-hidden">
+      <div className="grid gap-6 lg:grid-cols-[1.4fr_0.8fr]">
+        <section className="border border-white/10 bg-[#0a0a0a] min-h-[360px] relative overflow-hidden p-6">
           <div
             className="absolute inset-0 opacity-[0.04]"
             style={{
@@ -73,129 +101,106 @@ export default function OverviewPage() {
             }}
           />
 
-          {/* label */}
-          <div className="absolute top-4 left-4 flex items-center gap-2">
-            <span className="text-[9px] font-black uppercase tracking-widest text-gray-500">
-              GPS Feed
-            </span>
-            <span className="bg-primary text-black text-[8px] font-black uppercase px-1.5 py-0.5 tracking-wider">
-              Live
-            </span>
-          </div>
-
-          {/* pin */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="relative">
-              <div className="absolute -inset-6 border border-primary/20 rounded-full" />
-              <div className="absolute -inset-12 border border-primary/10 rounded-full" />
-              <div className="bg-primary p-2 rotate-45">
-                <Navigation className="-rotate-45 text-black" size={18} />
+          <div className="relative z-10 flex h-full min-h-[310px] flex-col justify-between">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-[9px] font-black uppercase tracking-widest text-gray-500">
+                  Nodo principal
+                </p>
+                <h2 className="mt-2 text-3xl font-black uppercase">
+                  {latestEvent?.deviceId || "esp32-demo-01"}
+                </h2>
               </div>
-              <div className="absolute -top-7 left-1/2 -translate-x-1/2 whitespace-nowrap bg-black border border-white/10 px-2 py-1 text-[9px] font-black uppercase tracking-wider">
-                NODE_LIMA_01
-              </div>
+              <ShieldCheck className={isOnline ? "text-primary" : "text-white/20"} size={34} />
             </div>
-          </div>
-          <div className="absolute bottom-4 left-4 border border-white/10 bg-black px-4 py-3">
-            <p className="text-[9px] text-gray-500 uppercase tracking-widest mb-1">
-              Coordinates
-            </p>
-            <p className="text-xs font-mono font-black">-12.0463, -77.0427</p>
-          </div>
-          <div className="absolute bottom-4 right-4 border border-white/10 bg-black px-4 py-3">
-            <p className="text-[9px] text-gray-500 uppercase tracking-widest mb-1">
-              Signal
-            </p>
-            <div className="flex items-end gap-0.5 h-4">
-              {[3, 5, 7, 9, 11].map((h, i) => (
-                <div
-                  key={i}
-                  className={`w-1.5 ${i < 4 ? "bg-primary" : "bg-white/10"}`}
-                  style={{ height: `${h}px` }}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
 
-        <div className="flex flex-col gap-4">
+            {loading ? (
+              <div className="flex items-center gap-3 text-gray-500">
+                <RefreshCw className="animate-spin" size={18} />
+                <span className="text-xs uppercase tracking-widest">Cargando telemetria...</span>
+              </div>
+            ) : latestEvent ? (
+              <LatestEventPanel event={latestEvent} />
+            ) : (
+              <div className="border border-white/10 bg-black/70 p-5">
+                <AlertTriangle className="mb-4 text-yellow-300" size={28} />
+                <p className="font-black uppercase">Aun no hay eventos del circuito</p>
+                <p className="mt-2 text-sm text-gray-500">
+                  Cuando el ESP32 envie HEARTBEAT, A, G, B o R, este panel se actualizara.
+                </p>
+              </div>
+            )}
+          </div>
+        </section>
+
+        <section className="flex flex-col gap-4">
           <div className="flex items-center gap-3">
             <div className="h-px flex-1 bg-white/10" />
             <p className="text-[9px] font-black uppercase tracking-widest text-gray-500">
-              Active Hardware
+              Historial IoT
             </p>
             <div className="h-px flex-1 bg-white/10" />
           </div>
 
-          {units.map((unit) => (
-            <div
-              key={unit.id}
-              className="border border-white/10 bg-[#0a0a0a] p-5 hover:border-primary/40 transition"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <p className="font-black text-[13px] uppercase tracking-tight">
-                    {unit.name}
-                  </p>
-                  <p className="text-[9px] text-gray-600 uppercase tracking-widest mt-0.5">
-                    ID · {unit.id}
-                  </p>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                  <span className="text-[9px] font-black text-green-500 uppercase tracking-wider">
-                    Online
+          {events.length === 0 && !loading ? (
+            <div className="border border-white/10 bg-[#0a0a0a] p-5 text-sm text-gray-500">
+              Sin historial guardado en el backend.
+            </div>
+          ) : (
+            events.map((event) => (
+              <div key={event.id} className="border border-white/10 bg-[#0a0a0a] p-4">
+                <div className="flex items-center justify-between gap-3">
+                  <span className={`border px-2 py-1 text-[9px] font-black uppercase tracking-wider ${EVENT_STYLES[event.eventType]}`}>
+                    {EVENT_LABELS[event.eventType]}
+                  </span>
+                  <span className="text-[9px] uppercase text-gray-600">
+                    {formatDate(event.receivedAt)}
                   </span>
                 </div>
+                <p className="mt-3 text-sm text-gray-300">{event.message}</p>
+                <p className="mt-2 text-[10px] uppercase tracking-widest text-gray-600">
+                  {event.deviceId} · {event.blocked ? "bloqueada" : "sin bloqueo"}
+                </p>
               </div>
-              <div className="grid grid-cols-2 gap-3 mb-4">
-                <div className="bg-black border border-white/5 px-3 py-2.5">
-                  <p className="text-[8px] text-gray-600 uppercase font-black tracking-wider">
-                    Speed
-                  </p>
-                  <p className="text-lg font-black italic mt-0.5">
-                    {unit.speed}
-                    <span className="text-[10px] ml-1 not-italic text-gray-500">
-                      km/h
-                    </span>
-                  </p>
-                </div>
-                <div className="bg-black border border-white/5 px-3 py-2.5">
-                  <p className="text-[8px] text-gray-600 uppercase font-black tracking-wider">
-                    Battery
-                  </p>
-                  <p
-                    className={`text-lg font-black italic mt-0.5 ${
-                      unit.battery > 60
-                        ? "text-primary"
-                        : unit.battery > 30
-                        ? "text-yellow-400"
-                        : "text-red-400"
-                    }`}
-                  >
-                    {unit.battery}%
-                  </p>
-                </div>
-              </div>
+            ))
+          )}
+        </section>
+      </div>
+    </div>
+  );
+}
 
-              <div>
-                <div className="h-1 bg-white/5 w-full">
-                  <div
-                    className={`h-full transition-all ${
-                      unit.battery > 60
-                        ? "bg-primary"
-                        : unit.battery > 30
-                        ? "bg-yellow-400"
-                        : "bg-red-400"
-                    }`}
-                    style={{ width: `${unit.battery}%` }}
-                  />
-                </div>
-              </div>
-            </div>
-          ))}
+function LatestEventPanel({ event }: { event: IotDeviceEvent }) {
+  return (
+    <div className="border border-white/10 bg-black/80 p-5">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <span className={`border px-3 py-1.5 text-[10px] font-black uppercase tracking-wider ${EVENT_STYLES[event.eventType]}`}>
+          {EVENT_LABELS[event.eventType]}
+        </span>
+        <span className="text-[10px] uppercase tracking-widest text-gray-500">
+          {formatDate(event.receivedAt)}
+        </span>
+      </div>
+      <p className="mt-5 text-2xl font-black uppercase">{event.message}</p>
+      <div className="mt-5 grid gap-px bg-white/10 sm:grid-cols-2">
+        <div className="bg-[#0a0a0a] p-4">
+          <p className="text-[9px] font-black uppercase tracking-widest text-gray-600">Bloqueo</p>
+          <p className={event.blocked ? "mt-2 font-black text-red-300" : "mt-2 font-black text-primary"}>
+            {event.blocked ? "Activo" : "Inactivo"}
+          </p>
+        </div>
+        <div className="bg-[#0a0a0a] p-4">
+          <p className="text-[9px] font-black uppercase tracking-widest text-gray-600">Evento original</p>
+          <p className="mt-2 font-mono text-xs text-gray-300">{formatDate(event.occurredAt)}</p>
         </div>
       </div>
     </div>
   );
+}
+
+function formatDate(value: string) {
+  return new Intl.DateTimeFormat("es-PE", {
+    dateStyle: "short",
+    timeStyle: "medium",
+  }).format(new Date(value));
 }
