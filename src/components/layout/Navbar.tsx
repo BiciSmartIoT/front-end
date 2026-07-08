@@ -33,7 +33,11 @@ export default function Navbar() {
             
             <Link 
               href="/explore" 
-              className={`${isActive('/explore') ? 'text-primary' : 'text-gray-500 hover:text-white'} transition-colors flex items-center gap-2`}
+              className={`transition-colors flex items-center gap-2 border px-3 py-1.5 ${
+                pathname.startsWith('/explore')
+                  ? 'border-primary text-primary bg-primary/5'
+                  : 'border-white/10 text-white hover:border-primary hover:text-primary'
+              }`}
             >
               <Search size={12} /> Explore
             </Link>

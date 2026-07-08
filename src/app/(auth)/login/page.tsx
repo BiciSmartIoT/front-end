@@ -94,10 +94,10 @@ export default function LoginPage() {
               <button
                 type="button"
                 onClick={() => setShowPassword((value) => !value)}
-                className="absolute right-4 text-gray-600 transition hover:text-primary"
+                className="absolute right-3 flex h-8 w-8 items-center justify-center border border-white/10 bg-zinc-950 text-gray-300 transition hover:border-primary hover:text-primary"
                 aria-label={showPassword ? "Ocultar contraseña" : "Ver contraseña"}
               >
-                {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
             </div>
           </div>

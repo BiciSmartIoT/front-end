@@ -14,6 +14,19 @@ export default function ExplorePage() {
 
   const { vehicles } = useFleet("all");
 
+  const getSpecsHref = (bike: (typeof vehicles)[number], index: number) => {
+    const params = new URLSearchParams({
+      id: String(bike.id),
+      title: bike.title,
+      description: bike.description || "Bicicleta conectada a BiciSmartIoT.",
+      price: String(bike.hourlyPrice),
+      status: bike.status,
+      image: bike.image || mockBikeImages[index % mockBikeImages.length],
+    });
+
+    return `/explore/specs?${params.toString()}`;
+  };
+
   return (
 
     <div className="min-h-screen bg-black p-12 pt-24">
@@ -100,7 +113,7 @@ export default function ExplorePage() {
 
                 </div>
 
-                <Link href={`/explore/${bike.id}`}>
+                <Link href={getSpecsHref(bike, index)}>
 
                   <Button
                     className="w-full text-[10px] tracking-[0.2em]"

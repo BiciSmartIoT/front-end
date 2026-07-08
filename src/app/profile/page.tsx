@@ -1,21 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { User, Mail, Phone, Shield, MapPin, Camera, Save, HardDrive } from "lucide-react";
 import { Button } from "../../components/ui/Button";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function ProfilePage() {
+  const { user } = useAuth();
   const [loading, setLoading] = useState(false);
 
-  const [user, setUser] = useState({
-    name: "BRUNO BIKES SAC",
-    email: "bruno@bicesmartiot.com",
-    phone: "+51 900 800 700",
-    role: "PROVIDER",
-    status: "APPROVED",
-    joined: "MAY 2026",
-    location: "Lima, Peru"
-  });
+  const profile = useMemo(() => {
+    const displayName = [user?.firstName, user?.lastName]
+      .filter(Boolean)
+      .join(" ")
+      .trim();
+    const role = user?.roles?.includes("ROLE_PROVIDER")
+      ? "PROVIDER"
+      : user?.roles?.includes("ROLE_ADMIN")
+        ? "ADMIN"
+        : "RIDER";
+
+    return {
+      name: displayName || user?.email?.split("@")[0] || "Usuario",
+      email: user?.email || "Sin correo registrado",
+      phone: "Pendiente de registro",
+      role,
+      status: user ? "ACTIVE" : "NO SESSION",
+      joined: "Cuenta activa",
+      location: "Pendiente de registro",
+    };
+  }, [user]);
 
   const handleSave = () => {
     setLoading(true);
@@ -35,7 +49,7 @@ export default function ProfilePage() {
         <div className="flex flex-col items-end">
             <span className="text-[9px] font-black text-gray-500 uppercase">Status</span>
             <span className="text-xs font-bold text-primary flex items-center gap-1 italic">
-               <Shield size={12} /> {user.status}
+               <Shield size={12} /> {profile.status}
             </span>
         </div>
       </header>
@@ -56,11 +70,11 @@ export default function ProfilePage() {
           <div className="bg-[#0A0A0A] border border-white/5 p-4 space-y-4">
              <div>
                 <p className="text-[8px] font-black text-gray-500 uppercase tracking-widest">Member Since</p>
-                <p className="text-sm font-bold italic">{user.joined}</p>
+                <p className="text-sm font-bold italic">{profile.joined}</p>
              </div>
              <div>
                 <p className="text-[8px] font-black text-gray-500 uppercase tracking-widest">Account Type</p>
-                <p className="text-sm font-bold text-primary italic underline underline-offset-4">{user.role}</p>
+                <p className="text-sm font-bold text-primary italic underline underline-offset-4">{profile.role}</p>
              </div>
           </div>
         </div>
@@ -68,10 +82,10 @@ export default function ProfilePage() {
   
         <div className="md:col-span-2 space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <ProfileInput label="Full Name / Entity" value={user.name} icon={<User size={14}/>} />
-            <ProfileInput label="Email Address" value={user.email} icon={<Mail size={14}/>} />
-            <ProfileInput label="Phone Number" value={user.phone} icon={<Phone size={14}/>} />
-            <ProfileInput label="Primary Location" value={user.location} icon={<MapPin size={14}/>} />
+            <ProfileInput label="Full Name / Entity" value={profile.name} icon={<User size={14}/>} />
+            <ProfileInput label="Email Address" value={profile.email} icon={<Mail size={14}/>} />
+            <ProfileInput label="Phone Number" value={profile.phone} icon={<Phone size={14}/>} />
+            <ProfileInput label="Primary Location" value={profile.location} icon={<MapPin size={14}/>} />
           </div>
 
           <div className="space-y-4">
@@ -113,7 +127,8 @@ function ProfileInput({ label, value, icon }: { label: string, value: string, ic
         {icon} {label}
       </label>
       <input 
-        defaultValue={value}
+        value={value}
+        readOnly
         className="w-full bg-black border border-white/10 p-4 text-xs font-bold uppercase outline-none focus:border-primary transition-all text-zinc-300 focus:text-white"
       />
     </div>
