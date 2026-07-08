@@ -15,6 +15,8 @@ export interface Vehicle {
 
   longitude: number;
 
+  deviceId?: string;
+
   status:
     | "AVAILABLE"
     | "IN_SERVICE"
@@ -45,6 +47,7 @@ export const VehicleService = {
     hourlyPrice: number;
     latitude: number;
     longitude: number;
+    deviceId?: string;
   }) => {
     return await apiFetch("/vehicles", {
       method: "POST",
@@ -55,7 +58,26 @@ export const VehicleService = {
         hourlyPrice: data.hourlyPrice,
         latitude: data.latitude,
         longitude: data.longitude,
+        deviceId: data.deviceId || undefined,
       }),
+    });
+  },
+
+  updateVehicle: async (
+    id: string,
+    data: Partial<{
+      title: string;
+      description: string;
+      hourlyPrice: number;
+      latitude: number;
+      longitude: number;
+      deviceId: string;
+      desiredStatus: Vehicle["status"];
+    }>
+  ): Promise<Vehicle> => {
+    return await apiFetch(`/vehicles/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(data),
     });
   },
 

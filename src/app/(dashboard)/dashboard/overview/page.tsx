@@ -8,7 +8,12 @@ import { IotDeviceEvent, IotEventType } from "../../../../services/iot-service";
 const EVENT_LABELS: Record<IotEventType, string> = {
   SPEED_ALERT: "Alerta de velocidad",
   NEAR_LIMIT: "Cerca del limite",
+  GPS_UPDATE: "GPS actualizado",
+  GEOFENCE_OUTSIDE: "Fuera de zona",
+  UNLOCKED: "Desbloqueada",
   LOCKED: "Bloqueo activado",
+  COMMAND_ACK: "Comando confirmado",
+  CONFIG_UPDATED: "Config actualizada",
   RESET: "Sistema reiniciado",
   HEARTBEAT: "Conexion activa",
 };
@@ -16,7 +21,12 @@ const EVENT_LABELS: Record<IotEventType, string> = {
 const EVENT_STYLES: Record<IotEventType, string> = {
   SPEED_ALERT: "text-yellow-300 border-yellow-300/30 bg-yellow-300/10",
   NEAR_LIMIT: "text-orange-300 border-orange-300/30 bg-orange-300/10",
+  GPS_UPDATE: "text-cyan-300 border-cyan-300/30 bg-cyan-300/10",
+  GEOFENCE_OUTSIDE: "text-red-300 border-red-300/30 bg-red-300/10",
+  UNLOCKED: "text-primary border-primary/30 bg-primary/10",
   LOCKED: "text-red-300 border-red-300/30 bg-red-300/10",
+  COMMAND_ACK: "text-blue-300 border-blue-300/30 bg-blue-300/10",
+  CONFIG_UPDATED: "text-violet-300 border-violet-300/30 bg-violet-300/10",
   RESET: "text-blue-300 border-blue-300/30 bg-blue-300/10",
   HEARTBEAT: "text-primary border-primary/30 bg-primary/10",
 };
@@ -53,7 +63,7 @@ export default function OverviewPage() {
             BiceSmart<span className="text-primary">IoT</span>
           </h1>
           <p className="text-gray-500 text-[11px] uppercase mt-2 tracking-wider">
-            Telemetria real del circuito ESP32
+            Edge, telemetria y seguridad del circuito ESP32
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -126,7 +136,7 @@ export default function OverviewPage() {
                 <AlertTriangle className="mb-4 text-yellow-300" size={28} />
                 <p className="font-black uppercase">Aun no hay eventos del circuito</p>
                 <p className="mt-2 text-sm text-gray-500">
-                  Cuando el ESP32 envie HEARTBEAT, A, G, B o R, este panel se actualizara.
+                  Cuando el ESP32 envie HEARTBEAT, GPS_UPDATE, SPEED_ALERT o LOCKED, este panel se actualizara.
                 </p>
               </div>
             )}
@@ -192,6 +202,16 @@ function LatestEventPanel({ event }: { event: IotDeviceEvent }) {
         <div className="bg-[#0a0a0a] p-4">
           <p className="text-[9px] font-black uppercase tracking-widest text-gray-600">Evento original</p>
           <p className="mt-2 font-mono text-xs text-gray-300">{formatDate(event.occurredAt)}</p>
+        </div>
+        <div className="bg-[#0a0a0a] p-4">
+          <p className="text-[9px] font-black uppercase tracking-widest text-gray-600">Velocidad</p>
+          <p className="mt-2 font-black text-white">{event.speedKmph?.toFixed(1) ?? "0.0"} km/h</p>
+        </div>
+        <div className="bg-[#0a0a0a] p-4">
+          <p className="text-[9px] font-black uppercase tracking-widest text-gray-600">Geofence</p>
+          <p className={event.insideGeofence === false ? "mt-2 font-black text-red-300" : "mt-2 font-black text-primary"}>
+            {event.insideGeofence === false ? "Fuera" : "Dentro / pendiente"}
+          </p>
         </div>
       </div>
     </div>

@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Plus, Power, Cpu, Camera, X, MapPin } from "lucide-react";
 import { Button } from "../../../../components/ui/Button";
 import { VehicleService, Vehicle } from "../../../../services/vehicle-service";
-import { API_BASE_URL } from "../../../../lib/api";
+import { API_BASE_URL, hasAuthToken } from "../../../../lib/api";
 
 const mockBikeImages = [
   "https://images.unsplash.com/photo-1541625602330-2277a4c46182?q=80&w=1200&auto=format&fit=crop",
@@ -31,14 +32,20 @@ export default function FleetPage() {
     hourlyPrice: 0,
     latitude: -12.0464,
     longitude: -77.0428,
+    deviceId: "esp32-demo-01",
   });
 
   const fetchVehicles = async () => {
+    if (!hasAuthToken()) {
+      setVehicles([]);
+      setLoading(false);
+      return;
+    }
+
     try {
       const data = await VehicleService.getOwnFleet();
       setVehicles(Array.isArray(data) ? data : []);
     } catch (err) {
-      console.error(err);
       setVehicles([]);
     } finally {
       setLoading(false);
@@ -52,10 +59,16 @@ export default function FleetPage() {
     try {
       await VehicleService.createVehicle(newVehicle);
       setShowRegister(false);
-      setNewVehicle({ title: "", description: "", hourlyPrice: 0, latitude: -12.0464, longitude: -77.0428 });
+      setNewVehicle({
+        title: "",
+        description: "",
+        hourlyPrice: 0,
+        latitude: -12.0464,
+        longitude: -77.0428,
+        deviceId: "esp32-demo-01",
+      });
       fetchVehicles();
     } catch (err) {
-      console.error(err);
       alert("Error creating vehicle");
     }
   };
@@ -171,18 +184,32 @@ export default function FleetPage() {
                     {bike.latitude.toFixed(3)}, {bike.longitude.toFixed(3)}
                   </span>
                 </div>
+                <div className="mb-5 flex items-center gap-1.5">
+                  <Cpu size={11} className="text-primary flex-shrink-0" />
+                  <span className="text-[10px] text-gray-600 uppercase tracking-wider">
+                    {bike.deviceId || "Sin ESP32 asignado"}
+                  </span>
+                </div>
 
-                <div className="border-t border-white/5 pt-4 flex items-center justify-between">
+                <div className="border-t border-white/5 pt-4 flex items-center justify-between gap-3">
                   <span className="text-[9px] text-gray-600 uppercase tracking-widest font-black">
                     Unit #{String(index + 1).padStart(3, "0")}
                   </span>
-                  <button
-                    onClick={() => { setSelectedBike(bike); setShowActivation(true); }}
-                    className="flex items-center gap-2 text-[10px] font-black uppercase tracking-wider border border-white/10 px-3 py-2 hover:border-primary hover:text-primary transition"
-                  >
-                    <Power size={12} />
-                    Activate
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href={`/dashboard/fleet/detail?id=${bike.id}`}
+                      className="text-[10px] font-black uppercase tracking-wider border border-white/10 px-3 py-2 hover:border-primary hover:text-primary transition"
+                    >
+                      Details
+                    </Link>
+                    <button
+                      onClick={() => { setSelectedBike(bike); setShowActivation(true); }}
+                      className="flex items-center gap-2 text-[10px] font-black uppercase tracking-wider border border-white/10 px-3 py-2 hover:border-primary hover:text-primary transition"
+                    >
+                      <Power size={12} />
+                      Activate
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -268,6 +295,17 @@ export default function FleetPage() {
                   />
                 </div>
               </div>
+              <div>
+                <label className="text-[9px] font-black uppercase text-zinc-500 tracking-widest block mb-1.5">
+                  ESP32 Device ID
+                </label>
+                <input
+                  placeholder="esp32-demo-01"
+                  value={newVehicle.deviceId}
+                  className="w-full bg-transparent border border-white/10 px-4 h-12 text-sm font-mono outline-none focus:border-primary transition placeholder:text-zinc-800"
+                  onChange={(e) => setNewVehicle({ ...newVehicle, deviceId: e.target.value.trim() })}
+                />
+              </div>
 
               <div className="flex gap-4 pt-4">
                 <button
@@ -313,7 +351,6 @@ function ActivationModal({ bike, onClose }: { bike: Vehicle; onClose: () => void
       alert("Vehicle activated");
       onClose();
     } catch (err) {
-      console.error(err);
       alert("Activation failed");
     } finally {
       setUploading(false);

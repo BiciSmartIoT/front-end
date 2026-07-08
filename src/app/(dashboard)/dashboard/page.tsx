@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { apiFetch } from "../../../lib/api";
+import { apiFetch, hasAuthToken } from "../../../lib/api";
 import { TrendingUp, Zap, Clock } from "lucide-react";
 
 interface Vehicle {
@@ -17,7 +17,11 @@ export default function DashboardPage() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
 
   useEffect(() => {
-    apiFetch("/vehicles/own").then(setVehicles).catch(console.error);
+    if (!hasAuthToken()) {
+      setVehicles([]);
+      return;
+    }
+    apiFetch("/vehicles/own").then(setVehicles).catch(() => setVehicles([]));
   }, []);
 
   const available = vehicles.filter((v) => v.status === "AVAILABLE").length;

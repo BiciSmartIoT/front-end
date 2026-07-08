@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { IotDeviceEvent, IotService } from "../services/iot-service";
+import { hasAuthToken } from "../lib/api";
 
 const POLL_INTERVAL_MS = 5000;
 const ONLINE_WINDOW_MS = 30000;
@@ -16,6 +17,14 @@ export function useIotTelemetry() {
     let timer: ReturnType<typeof setInterval>;
 
     const load = async () => {
+      if (!hasAuthToken()) {
+        setLatestEvent(null);
+        setEvents([]);
+        setError(null);
+        setLoading(false);
+        return;
+      }
+
       try {
         const [latest, recent] = await Promise.all([
           IotService.getLatestEvent(),

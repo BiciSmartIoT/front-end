@@ -5,6 +5,10 @@ export const API_BASE_URL =
 export const TOKEN_STORAGE_KEY = "bicesmartiot_token";
 export const USER_STORAGE_KEY = "bicesmartiot_user";
 
+export function hasAuthToken() {
+  return Boolean(localStorage.getItem(TOKEN_STORAGE_KEY));
+}
+
 export async function apiFetch(endpoint: string, options: any = {}) {
   const token = localStorage.getItem(TOKEN_STORAGE_KEY);
 
@@ -18,10 +22,6 @@ export async function apiFetch(endpoint: string, options: any = {}) {
     ...options,
     headers,
   });
-
-  if (response.status === 401) {
-    console.error("Sesion expirada");
-  }
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
