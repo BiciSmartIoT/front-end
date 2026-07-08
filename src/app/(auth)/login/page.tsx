@@ -4,12 +4,13 @@ import { useState } from "react";
 import { useAuth } from "../../../contexts/AuthContext";
 import { Button } from "../../../components/ui/Button";
 import Link from "next/link";
-import { AtSign, LockKeyhole, Zap } from "lucide-react";
+import { AtSign, Eye, EyeOff, Zap } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const { login } = useAuth();
@@ -59,6 +60,7 @@ export default function LoginPage() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                autoComplete="email"
                 className="w-full bg-black border border-white/10 p-4 text-xs font-bold uppercase outline-none focus:border-primary transition-all placeholder:text-gray-800 text-white"
                 placeholder="ADMIN@BIKESMARTIOT.COM"
                 required
@@ -81,14 +83,22 @@ export default function LoginPage() {
             </div>
             <div className="relative flex items-center">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-black border border-white/10 p-4 text-xs font-bold outline-none focus:border-primary transition-all placeholder:text-gray-800 text-white"
+                autoComplete="current-password"
+                className="w-full bg-black border border-white/10 p-4 pr-12 text-xs font-bold outline-none focus:border-primary transition-all placeholder:text-gray-800 text-white"
                 placeholder="********"
                 required
               />
-              <LockKeyhole size={14} className="absolute right-4 text-gray-600" />
+              <button
+                type="button"
+                onClick={() => setShowPassword((value) => !value)}
+                className="absolute right-4 text-gray-600 transition hover:text-primary"
+                aria-label={showPassword ? "Ocultar contraseña" : "Ver contraseña"}
+              >
+                {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
+              </button>
             </div>
           </div>
 
